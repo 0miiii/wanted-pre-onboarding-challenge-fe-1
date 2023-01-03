@@ -48,6 +48,15 @@ const SignupForm = () => {
     return setMatchPW(false);
   };
 
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (validEmail || validPW || matchPW) {
+      const profile = { email: inputEmail, password: inputMatchPW };
+      return console.log(profile);
+    }
+    return console.log("올바르지않습니다");
+  };
+
   const isEmail = (email: string) => {
     const regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
     if (regex.test(email)) {
@@ -72,7 +81,7 @@ const SignupForm = () => {
 
   return (
     <>
-      <form>
+      <form onSubmit={submitHandler}>
         <label htmlFor="email">email</label>
         <input
           id="email"
