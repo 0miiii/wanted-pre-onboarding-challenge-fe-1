@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SIGNUP } from "../../../constants/path";
 import Button from "../../atoms/Button/Button";
 
@@ -9,6 +9,7 @@ const SignupForm = () => {
   const [validEmail, setValidEmail] = useState(false);
   const [validPW, setValidPW] = useState(false);
   const [matchPW, setMatchPW] = useState(false);
+  const [allValid, setAllValid] = useState(false);
 
   const emailChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputEmail(event.target.value);
@@ -50,7 +51,7 @@ const SignupForm = () => {
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (validEmail || validPW || matchPW) {
+    if (allValid) {
       const profile = { email: inputEmail, password: inputMatchPW };
       return console.log(profile);
     }
@@ -78,6 +79,13 @@ const SignupForm = () => {
     }
     return false;
   };
+
+  useEffect(() => {
+    if (validEmail && validPW && matchPW) {
+      return setAllValid(true);
+    }
+    return setAllValid(false);
+  }, [validEmail, validPW, matchPW]);
 
   return (
     <>
@@ -113,7 +121,7 @@ const SignupForm = () => {
           onBlur={validateMatchPwHandler}
         />
         <div>{matchPW ? SIGNUP.PW_MATCH_SUCCESS : SIGNUP.PW_MATCH_FAIL}</div>
-        <Button>가입하기</Button>
+        <Button disabled={!allValid}>가입하기</Button>
       </form>
     </>
   );
