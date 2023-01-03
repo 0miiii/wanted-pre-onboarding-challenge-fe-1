@@ -74,7 +74,7 @@ const SignupForm = () => {
   };
 
   const doPasswordMatch = (pw: string, checkPw: string) => {
-    if (pw === checkPw) {
+    if (validPW && pw === checkPw) {
       return true;
     }
     return false;
