@@ -1,11 +1,12 @@
-import React from "react"
+import React from "react";
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode;
+  disabled?: boolean;
 }
 
-const Button: React.FC<Props> = ({ children }) => {
-  return <button>{children}</button>
-}
+const Button: React.FC<Props> = ({ children, disabled }) => {
+  return <button disabled={disabled}>{children}</button>;
+};
 
-export default Button
+export default Button;
