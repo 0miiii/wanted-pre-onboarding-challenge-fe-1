@@ -85,7 +85,7 @@ const SignupForm = () => {
         <label htmlFor="email">email</label>
         <input
           id="email"
-          type="text"
+          type="email"
           placeholder={SIGNUP.EMAIL}
           onChange={emailChangeHandler}
           onBlur={validateEmailHandler}
@@ -97,7 +97,7 @@ const SignupForm = () => {
         <label htmlFor="pw">password</label>
         <input
           id="pw"
-          type="text"
+          type="password"
           placeholder={SIGNUP.PW}
           onChange={pwChangeHandler}
           onBlur={validatePwHandler}
@@ -107,7 +107,7 @@ const SignupForm = () => {
         <label htmlFor="match-pw">password check</label>
         <input
           id="match-pw"
-          type="text"
+          type="password"
           placeholder={SIGNUP.PW}
           onChange={matchPwChangeHandler}
           onBlur={validateMatchPwHandler}
