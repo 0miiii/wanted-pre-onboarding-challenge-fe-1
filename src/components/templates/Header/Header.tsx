@@ -1,8 +1,8 @@
-import React from "react"
-import Button from "../../atoms/Button/Button"
-import { Link } from "react-router-dom"
-import { PATH } from "../../../constants/path"
-import Container from "./Header.styles"
+import React from "react";
+import Button from "../../atoms/Button/Button";
+import { Link } from "react-router-dom";
+import { PATH } from "../../../constants/path";
+import Container from "./Header.styles";
 
 const Header = () => {
   return (
@@ -14,7 +14,7 @@ const Header = () => {
         <Button>SignUp</Button>
       </Link>
     </Container>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
