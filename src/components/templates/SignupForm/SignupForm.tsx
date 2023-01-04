@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SIGNUP } from "../../../constants/path";
+import { SIGNUP } from "../../../constants/auth";
 import Button from "../../atoms/Button/Button";
 
 const SignupForm = () => {

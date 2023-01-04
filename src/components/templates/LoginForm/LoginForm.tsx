@@ -1,6 +1,6 @@
-import React from "react"
-import { LOGIN } from "../../../constants/path"
-import Button from "../../atoms/Button/Button"
+import React from "react";
+import { LOGIN } from "../../../constants/auth";
+import Button from "../../atoms/Button/Button";
 
 const LoginForm = () => {
   return (
@@ -10,7 +10,7 @@ const LoginForm = () => {
       <Button>로그인</Button>
       <Button>회원가입</Button>
     </main>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;
