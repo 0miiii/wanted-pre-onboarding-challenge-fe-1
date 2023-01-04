@@ -59,7 +59,7 @@ const SignupForm = () => {
       const response = await signup_request(userInfo);
       alert(response.message);
       localStorage.setItem("token", response.token);
-      navigate("/");
+      navigate("/main");
       return;
     }
     return alert("아이디와 비밀번호를 다시 확인해주세요");
