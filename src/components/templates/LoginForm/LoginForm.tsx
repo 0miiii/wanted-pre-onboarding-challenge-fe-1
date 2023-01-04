@@ -36,12 +36,12 @@ const LoginForm = () => {
   return (
     <form onSubmit={loginHandler}>
       <input
-        type="text"
+        type="email"
         placeholder={LOGIN.EMAIL}
         onChange={emailChangeHandler}
       />
       <input
-        type="text"
+        type="password"
         placeholder={LOGIN.PW}
         onChange={passwordChangeHandler}
       />
