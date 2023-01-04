@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { SIGNUP } from "../../../constants/auth";
-import { signup_request } from "../../../apis/auth";
+import { auth_request } from "../../../apis/auth";
 import Button from "../../atoms/Button/Button";
 
 const SignupForm = () => {
@@ -56,7 +56,7 @@ const SignupForm = () => {
     event.preventDefault();
     if (allValid) {
       const userInfo = { email: inputEmail, password: inputMatchPW };
-      const response = await signup_request(userInfo);
+      const response = await auth_request("signup", userInfo);
       alert(response.message);
       localStorage.setItem("token", response.token);
       navigate("/main");
