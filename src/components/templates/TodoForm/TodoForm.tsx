@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Button from "../../atoms/Button/Button";
+import { createTodo_request } from "../../../apis/todo";
 
 const TodoForm = () => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredContent, setEnteredContent] = useState("");
+  const token = localStorage.getItem("token");
 
   const titleChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredTitle(event.target.value);
@@ -15,13 +17,15 @@ const TodoForm = () => {
     setEnteredContent(event.target.value);
   };
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (enteredTitle === "" && enteredContent === "") {
       alert("글을 모두 입력해주세요");
       return;
     }
-
+    const todo = { title: enteredTitle, content: enteredContent };
+    const response = await createTodo_request(todo, token);
+    console.log(response);
     setEnteredTitle("");
     setEnteredContent("");
   };
