@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { SIGNUP } from "../../../constants/auth";
+import { signup_request } from "../../../apis/auth";
 import Button from "../../atoms/Button/Button";
 
 const SignupForm = () => {
@@ -10,6 +12,7 @@ const SignupForm = () => {
   const [validPW, setValidPW] = useState(false);
   const [matchPW, setMatchPW] = useState(false);
   const [allValid, setAllValid] = useState(false);
+  const navigate = useNavigate();
 
   const emailChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputEmail(event.target.value);
@@ -49,13 +52,17 @@ const SignupForm = () => {
     return setMatchPW(false);
   };
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (allValid) {
-      const profile = { email: inputEmail, password: inputMatchPW };
-      return console.log(profile);
+      const userInfo = { email: inputEmail, password: inputMatchPW };
+      const response = await signup_request(userInfo);
+      alert(response.message);
+      localStorage.setItem("token", response.token);
+      navigate("/");
+      return;
     }
-    return console.log("올바르지않습니다");
+    return alert("아이디와 비밀번호를 다시 확인해주세요");
   };
 
   const isEmail = (email: string) => {
