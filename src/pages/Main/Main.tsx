@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
 import { getTodos_request } from "../../apis/todo";
-import Button from "../../components/atoms/Button/Button";
 import TodoForm from "../../components/templates/TodoForm/TodoForm";
 import TodoList from "../../components/templates/TodoList/TodoList";
 
@@ -14,7 +12,6 @@ type getTodoType = {
 };
 
 const Main = () => {
-  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [todoList, setTodoList] = useState<getTodoType[]>([]);
 
@@ -25,17 +22,10 @@ const Main = () => {
     });
   }, [token]);
 
-  const logoutHandler = () => {
-    localStorage.removeItem("token");
-    alert("로그아웃 성공");
-    navigate("/login");
-  };
-
   return (
     <>
       {token ? (
         <>
-          <Button onClick={logoutHandler}>로그아웃</Button>
           <TodoList todoList={todoList} />
           <TodoForm addTodoList={setTodoList} />
         </>
