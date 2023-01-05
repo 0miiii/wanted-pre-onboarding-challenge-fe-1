@@ -2,7 +2,17 @@ import React, { useState } from "react";
 import Button from "../../atoms/Button/Button";
 import { createTodo_request } from "../../../apis/todo";
 
-const TodoForm = () => {
+type getTodoType = {
+  title: string;
+  content: string;
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+const TodoForm: React.FC<{
+  addTodoList: React.Dispatch<React.SetStateAction<getTodoType[]>>;
+}> = ({ addTodoList }) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredContent, setEnteredContent] = useState("");
   const token = localStorage.getItem("token");
@@ -19,13 +29,18 @@ const TodoForm = () => {
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (enteredTitle === "" && enteredContent === "") {
       alert("글을 모두 입력해주세요");
       return;
     }
+
     const todo = { title: enteredTitle, content: enteredContent };
     const response = await createTodo_request(todo, token);
-    console.log(response);
+    addTodoList((prev) => {
+      return [...prev, response.data];
+    });
+
     setEnteredTitle("");
     setEnteredContent("");
   };
