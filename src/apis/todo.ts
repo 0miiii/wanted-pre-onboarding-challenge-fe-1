@@ -14,3 +14,14 @@ export const createTodo_request = async (
     console.log(err);
   }
 };
+
+export const getTodos_request = async (token: string | null) => {
+  try {
+    const { data } = await axios.get(`http://localhost:8080/todos`, {
+      headers: { Authorization: token },
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
