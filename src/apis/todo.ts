@@ -53,3 +53,22 @@ export const deleteTodoRequest = async (
     console.log(err);
   }
 };
+
+export const updateTodoRequest = async (
+  todo: RequestTodo,
+  token: string | null,
+  id: string
+) => {
+  try {
+    const { data } = await axios.put(
+      `http://localhost:8080/todos/${id}`,
+      todo,
+      {
+        headers: { Authorization: token },
+      }
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
