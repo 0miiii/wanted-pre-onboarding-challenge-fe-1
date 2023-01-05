@@ -1,15 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Todo } from "../../../types/todo";
 
-type getTodoType = {
-  title: string;
-  content: string;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-const TodoList: React.FC<{ todoList: getTodoType[] }> = ({ todoList }) => {
+const TodoList: React.FC<{ todoList: Todo[] }> = ({ todoList }) => {
   return (
     <ul>
       {todoList.map((todo) => (

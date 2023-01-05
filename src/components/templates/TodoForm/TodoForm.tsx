@@ -1,17 +1,10 @@
 import React, { useState } from "react";
 import Button from "../../atoms/Button/Button";
+import { Todo } from "../../../types/todo";
 import { createTodo_request } from "../../../apis/todo";
 
-type getTodoType = {
-  title: string;
-  content: string;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
 const TodoForm: React.FC<{
-  addTodoList: React.Dispatch<React.SetStateAction<getTodoType[]>>;
+  addTodoList: React.Dispatch<React.SetStateAction<Todo[]>>;
 }> = ({ addTodoList }) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredContent, setEnteredContent] = useState("");

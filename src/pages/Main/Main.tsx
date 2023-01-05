@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { getTodos_request } from "../../apis/todo";
+import { Todo } from "../../types/todo";
 import TodoForm from "../../components/templates/TodoForm/TodoForm";
 import TodoList from "../../components/templates/TodoList/TodoList";
 
-type getTodoType = {
-  title: string;
-  content: string;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
 const Main = () => {
   const token = localStorage.getItem("token");
-  const [todoList, setTodoList] = useState<getTodoType[]>([]);
+  const [todoList, setTodoList] = useState<Todo[]>([]);
 
   useEffect(() => {
     getTodos_request(token).then((res) => {
