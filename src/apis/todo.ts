@@ -39,3 +39,17 @@ export const getTodosById_request = async (
     console.log(err);
   }
 };
+
+export const deleteTodoRequest = async (
+  id: string | undefined,
+  token: string | null
+) => {
+  try {
+    const { data } = await axios.delete(`http://localhost:8080/todos/${id}`, {
+      headers: { Authorization: token },
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
