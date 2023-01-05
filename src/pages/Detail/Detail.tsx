@@ -17,6 +17,10 @@ const Detail = () => {
     });
   };
 
+  const editHandler = () => {
+    navigate(`/detail/${id}/edit`, { state: todo });
+  };
+
   useEffect(() => {
     getTodosById_request(id, token).then((res) => {
       const { data } = res;
@@ -30,7 +34,7 @@ const Detail = () => {
       <div>{todo?.title}</div>
       <h2>content</h2>
       <div>{todo?.content}</div>
-      <Button>수정하기</Button>
+      <Button onClick={editHandler}>수정하기</Button>
       <Button onClick={deleteHandler}>삭제하기</Button>
     </div>
   );
