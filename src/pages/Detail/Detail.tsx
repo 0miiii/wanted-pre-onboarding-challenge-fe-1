@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { getTodosById_request } from "../../apis/todo";
+import { useParams, useNavigate } from "react-router";
+import { getTodosById_request, deleteTodoRequest } from "../../apis/todo";
 import { Todo } from "../../types/todo";
 import Button from "../../components/atoms/Button/Button";
 
 const Detail = () => {
   const [todo, setTodo] = useState<Todo>();
+  const navigate = useNavigate();
   const { id } = useParams();
   const token = localStorage.getItem("token");
+
+  const deleteHandler = () => {
+    deleteTodoRequest(id, token).then((res) => {
+      alert("삭제되었습니다.");
+      navigate("/main");
+    });
+  };
 
   useEffect(() => {
     getTodosById_request(id, token).then((res) => {
@@ -23,7 +31,7 @@ const Detail = () => {
       <h2>content</h2>
       <div>{todo?.content}</div>
       <Button>수정하기</Button>
-      <Button>삭제하기</Button>
+      <Button onClick={deleteHandler}>삭제하기</Button>
     </div>
   );
 };
