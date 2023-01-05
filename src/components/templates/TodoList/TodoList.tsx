@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 type getTodoType = {
   title: string;
@@ -12,7 +13,9 @@ const TodoList: React.FC<{ todoList: getTodoType[] }> = ({ todoList }) => {
   return (
     <ul>
       {todoList.map((todo) => (
-        <li key={todo.id}>{todo.title}</li>
+        <Link to={`/detail/${todo.id}`} key={todo.id}>
+          <li>{todo.title}</li>
+        </Link>
       ))}
     </ul>
   );
