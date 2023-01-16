@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import styled from "styled-components";
 import { SIGNUP } from "../../constants/auth";
 import { auth_request } from "../../apis/auth";
 import Button from "../../components/atoms/Button/Button";
+
+const InputContainer = styled.div`
+  background-color: antiquewhite;
+  border-radius: 5px;
+  width: 70%;
+  padding: 10px;
+  margin: 10px;
+`;
 
 const SignUp: React.FC<{
   addToken: React.Dispatch<React.SetStateAction<string | null>>;
@@ -78,18 +87,18 @@ const SignUp: React.FC<{
     return setMatchPW(false);
   };
 
-  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (allValid) {
-      const userInfo = { email: inputEmail, password: inputMatchPW };
-      const response = await auth_request("signup", userInfo);
-      alert(response.message);
-      localStorage.setItem("token", response.token);
-      addToken(response.token);
-      navigate("/main");
-      return;
-    }
-    return alert("아이디와 비밀번호를 다시 확인해주세요");
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    // event.preventDefault();
+    // if (allValid) {
+    //   const userInfo = { email: inputEmail, password: inputMatchPW };
+    //   const response = await auth_request("signup", userInfo);
+    //   alert(response.message);
+    //   localStorage.setItem("token", response.token);
+    //   addToken(response.token);
+    //   navigate("/main");
+    //   return;
+    // }
+    // return alert("아이디와 비밀번호를 다시 확인해주세요");
   };
 
   useEffect(() => {
@@ -101,8 +110,8 @@ const SignUp: React.FC<{
 
   return (
     <form onSubmit={submitHandler}>
-      <label htmlFor="email">
-        email
+      <InputContainer>
+        <label htmlFor="email">email</label>
         <input
           id="email"
           type="email"
@@ -113,10 +122,10 @@ const SignUp: React.FC<{
         <div>
           {validEmail ? SIGNUP.EMAIL_VALID_SUCCESS : SIGNUP.EMAIL_VALID_FAIL}
         </div>
-      </label>
+      </InputContainer>
 
-      <label htmlFor="password">
-        password
+      <InputContainer>
+        <label htmlFor="password">password</label>
         <input
           id="password"
           type="password"
@@ -125,10 +134,10 @@ const SignUp: React.FC<{
           onBlur={validatePwHandler}
         />
         <div>{validPW ? SIGNUP.PW_VALID_SUCCESS : SIGNUP.PW_VALID_FAIL}</div>
-      </label>
+      </InputContainer>
 
-      <label htmlFor="match-pw">
-        password check
+      <InputContainer>
+        <label htmlFor="match-pw">password check</label>
         <input
           id="match-pw"
           type="password"
@@ -137,7 +146,7 @@ const SignUp: React.FC<{
           onBlur={validateMatchPwHandler}
         />
         <div>{matchPW ? SIGNUP.PW_MATCH_SUCCESS : SIGNUP.PW_MATCH_FAIL}</div>
-      </label>
+      </InputContainer>
 
       <Button disabled={!allValid}>가입하기</Button>
     </form>
