@@ -1,7 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Button from "../../atoms/Button/Button";
-import { Link } from "react-router-dom";
 import { PATH } from "../../../constants/path";
 import Container from "./Header.styles";
 
@@ -30,9 +29,7 @@ const Header: React.FC<{
           </Link>
         </>
       ) : (
-        <>
-          <Button onClick={logoutHandler}>Logout</Button>
-        </>
+        <Button onClick={logoutHandler}>Logout</Button>
       )}
     </Container>
   );

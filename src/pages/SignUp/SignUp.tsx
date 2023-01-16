@@ -16,6 +16,30 @@ const SignUp: React.FC<{
   const [allValid, setAllValid] = useState(false);
   const navigate = useNavigate();
 
+  const isEmail = (email: string) => {
+    const emailRegExp = "[a-z0-9]+@[a-z]+.[a-z]{2,3}";
+    const regex = new RegExp(emailRegExp);
+
+    if (regex.test(email)) {
+      return true;
+    }
+    return false;
+  };
+
+  const isMoreThan8Length = (pw: string) => {
+    if (pw.length >= 8) {
+      return true;
+    }
+    return false;
+  };
+
+  const doPasswordMatch = (pw: string, checkPw: string) => {
+    if (validPW && pw === checkPw) {
+      return true;
+    }
+    return false;
+  };
+
   const emailChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputEmail(event.target.value);
   };
@@ -68,28 +92,6 @@ const SignUp: React.FC<{
     return alert("아이디와 비밀번호를 다시 확인해주세요");
   };
 
-  const isEmail = (email: string) => {
-    const regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
-    if (regex.test(email)) {
-      return true;
-    }
-    return false;
-  };
-
-  const isMoreThan8Length = (pw: string) => {
-    if (pw.length >= 8) {
-      return true;
-    }
-    return false;
-  };
-
-  const doPasswordMatch = (pw: string, checkPw: string) => {
-    if (validPW && pw === checkPw) {
-      return true;
-    }
-    return false;
-  };
-
   useEffect(() => {
     if (validEmail && validPW && matchPW) {
       return setAllValid(true);
@@ -98,9 +100,9 @@ const SignUp: React.FC<{
   }, [validEmail, validPW, matchPW]);
 
   return (
-    <>
-      <form onSubmit={submitHandler}>
-        <label htmlFor="email">email</label>
+    <form onSubmit={submitHandler}>
+      <label htmlFor="email">
+        email
         <input
           id="email"
           type="email"
@@ -111,18 +113,22 @@ const SignUp: React.FC<{
         <div>
           {validEmail ? SIGNUP.EMAIL_VALID_SUCCESS : SIGNUP.EMAIL_VALID_FAIL}
         </div>
+      </label>
 
-        <label htmlFor="pw">password</label>
+      <label htmlFor="password">
+        password
         <input
-          id="pw"
+          id="password"
           type="password"
           placeholder={SIGNUP.PW}
           onChange={pwChangeHandler}
           onBlur={validatePwHandler}
         />
         <div>{validPW ? SIGNUP.PW_VALID_SUCCESS : SIGNUP.PW_VALID_FAIL}</div>
+      </label>
 
-        <label htmlFor="match-pw">password check</label>
+      <label htmlFor="match-pw">
+        password check
         <input
           id="match-pw"
           type="password"
@@ -131,9 +137,10 @@ const SignUp: React.FC<{
           onBlur={validateMatchPwHandler}
         />
         <div>{matchPW ? SIGNUP.PW_MATCH_SUCCESS : SIGNUP.PW_MATCH_FAIL}</div>
-        <Button disabled={!allValid}>가입하기</Button>
-      </form>
-    </>
+      </label>
+
+      <Button disabled={!allValid}>가입하기</Button>
+    </form>
   );
 };
 

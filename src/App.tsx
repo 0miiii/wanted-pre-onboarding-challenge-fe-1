@@ -8,7 +8,7 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import { PATH } from "./constants/path";
 
-function App() {
+const App = () => {
   const [token, setToken] = useState<string | null>("");
 
   useEffect(() => {
@@ -28,6 +28,6 @@ function App() {
       </Routes>
     </>
   );
-}
+};
 
 export default App;
