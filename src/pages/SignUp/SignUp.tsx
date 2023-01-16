@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { SIGNUP } from "../../constants/auth";
 import { auth_request } from "../../apis/auth";
 import Button from "../../components/atoms/Button/Button";
+import { isEmail, isMoreThan8Length, doMatch } from "../../utils/validCheck";
 
 const InputContainer = styled.div`
   background-color: antiquewhite;
@@ -16,81 +17,87 @@ const InputContainer = styled.div`
 const SignUp: React.FC<{
   addToken: React.Dispatch<React.SetStateAction<string | null>>;
 }> = ({ addToken }) => {
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputPW, setInputPW] = useState("");
-  const [inputMatchPW, setInputMatchPW] = useState("");
-  const [validEmail, setValidEmail] = useState(false);
-  const [validPW, setValidPW] = useState(false);
-  const [matchPW, setMatchPW] = useState(false);
-  const [allValid, setAllValid] = useState(false);
+  const [enteredEmail, setEnteredEmail] = useState("");
+  const [emailInputTouched, setEmailInputTouched] = useState(false);
+
+  const [enteredPw, setEnteredPw] = useState("");
+  const [pwInputTouched, setPwInputTouched] = useState(false);
+
+  const [enteredPwCheck, setEnteredPwCheck] = useState("");
+  const [checkPwInputTouched, setCheckInputTouched] = useState(false);
+
+  const enteredEmailIsValid = isEmail(enteredEmail);
+  const enteredPwIsValid = isMoreThan8Length(enteredPw);
+  const enteredPwCheckIsValid = doMatch(enteredPw, enteredPwCheck);
+  const isFormValid =
+    enteredEmailIsValid && enteredPwIsValid && enteredPwCheckIsValid;
+
   const navigate = useNavigate();
 
-  const isEmail = (email: string) => {
-    const emailRegExp = "[a-z0-9]+@[a-z]+.[a-z]{2,3}";
-    const regex = new RegExp(emailRegExp);
+  let enteredEmailFeedback;
 
-    if (regex.test(email)) {
-      return true;
-    }
-    return false;
-  };
+  if (!emailInputTouched) {
+    enteredEmailFeedback = "";
+  }
+  if (emailInputTouched && !enteredEmailIsValid) {
+    enteredEmailFeedback = SIGNUP.EMAIL_VALID_FAIL;
+  }
+  if (emailInputTouched && enteredEmailIsValid) {
+    enteredEmailFeedback = SIGNUP.EMAIL_VALID_SUCCESS;
+  }
 
-  const isMoreThan8Length = (pw: string) => {
-    if (pw.length >= 8) {
-      return true;
-    }
-    return false;
-  };
+  let enteredPwFeedback;
 
-  const doPasswordMatch = (pw: string, checkPw: string) => {
-    if (validPW && pw === checkPw) {
-      return true;
-    }
-    return false;
-  };
+  if (!pwInputTouched) {
+    enteredPwFeedback = "";
+  }
+  if (pwInputTouched && !enteredPwIsValid) {
+    enteredPwFeedback = SIGNUP.PW_VALID_FAIL;
+  }
+  if (pwInputTouched && enteredPwIsValid) {
+    enteredPwFeedback = SIGNUP.PW_VALID_SUCCESS;
+  }
+
+  let enteredPwCheckFeedback;
+
+  if (!checkPwInputTouched) {
+    enteredPwCheckFeedback = "";
+  }
+  if (checkPwInputTouched && !enteredPwCheckIsValid) {
+    enteredPwCheckFeedback = SIGNUP.PW_MATCH_FAIL;
+  }
+  if (checkPwInputTouched && enteredPwCheckIsValid) {
+    enteredPwCheckFeedback = SIGNUP.PW_MATCH_SUCCESS;
+  }
 
   const emailChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputEmail(event.target.value);
+    setEnteredEmail(event.target.value);
   };
 
   const pwChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputPW(event.target.value);
+    setEnteredPw(event.target.value);
   };
 
-  const matchPwChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputMatchPW(event.target.value);
+  const checkPwChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEnteredPwCheck(event.target.value);
   };
 
-  const validateEmailHandler = (event: React.FocusEvent<HTMLInputElement>) => {
-    const input = event.target.value;
-    if (isEmail(input)) {
-      return setValidEmail(true);
-    }
-    return setValidEmail(false);
+  const emailBlurHandler = () => {
+    setEmailInputTouched(true);
   };
 
-  const validatePwHandler = (event: React.FocusEvent<HTMLInputElement>) => {
-    const input = event.target.value;
-    if (isMoreThan8Length(input)) {
-      return setValidPW(true);
-    }
-    return setValidPW(false);
+  const pwBlurHandler = () => {
+    setPwInputTouched(true);
   };
 
-  const validateMatchPwHandler = (
-    event: React.FocusEvent<HTMLInputElement>
-  ) => {
-    const input = event.target.value;
-    if (doPasswordMatch(inputPW, input)) {
-      return setMatchPW(true);
-    }
-    return setMatchPW(false);
+  const pwCheckBlurHandler = () => {
+    setCheckInputTouched(true);
   };
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     // event.preventDefault();
     // if (allValid) {
-    //   const userInfo = { email: inputEmail, password: inputMatchPW };
+    //   const userInfo = { email: enteredEmail, password: enteredPwCheck };
     //   const response = await auth_request("signup", userInfo);
     //   alert(response.message);
     //   localStorage.setItem("token", response.token);
@@ -101,13 +108,6 @@ const SignUp: React.FC<{
     // return alert("아이디와 비밀번호를 다시 확인해주세요");
   };
 
-  useEffect(() => {
-    if (validEmail && validPW && matchPW) {
-      return setAllValid(true);
-    }
-    return setAllValid(false);
-  }, [validEmail, validPW, matchPW]);
-
   return (
     <form onSubmit={submitHandler}>
       <InputContainer>
@@ -117,11 +117,9 @@ const SignUp: React.FC<{
           type="email"
           placeholder={SIGNUP.EMAIL}
           onChange={emailChangeHandler}
-          onBlur={validateEmailHandler}
+          onBlur={emailBlurHandler}
         />
-        <div>
-          {validEmail ? SIGNUP.EMAIL_VALID_SUCCESS : SIGNUP.EMAIL_VALID_FAIL}
-        </div>
+        <p>{enteredEmailFeedback}</p>
       </InputContainer>
 
       <InputContainer>
@@ -131,9 +129,9 @@ const SignUp: React.FC<{
           type="password"
           placeholder={SIGNUP.PW}
           onChange={pwChangeHandler}
-          onBlur={validatePwHandler}
+          onBlur={pwBlurHandler}
         />
-        <div>{validPW ? SIGNUP.PW_VALID_SUCCESS : SIGNUP.PW_VALID_FAIL}</div>
+        <p>{enteredPwFeedback}</p>
       </InputContainer>
 
       <InputContainer>
@@ -142,13 +140,13 @@ const SignUp: React.FC<{
           id="match-pw"
           type="password"
           placeholder={SIGNUP.PW}
-          onChange={matchPwChangeHandler}
-          onBlur={validateMatchPwHandler}
+          onChange={checkPwChangeHandler}
+          onBlur={pwCheckBlurHandler}
         />
-        <div>{matchPW ? SIGNUP.PW_MATCH_SUCCESS : SIGNUP.PW_MATCH_FAIL}</div>
+        <div>{enteredPwCheckFeedback}</div>
       </InputContainer>
 
-      <Button disabled={!allValid}>가입하기</Button>
+      <Button disabled={!isFormValid}>가입하기</Button>
     </form>
   );
 };
