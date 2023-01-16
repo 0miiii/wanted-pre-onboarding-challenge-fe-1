@@ -15,8 +15,8 @@ export const isMoreThan8Length = (pw: string) => {
   return false;
 };
 
-export const doPasswordMatch = (pw: string, checkPw: string) => {
-  if (pw === checkPw) {
+export const doMatch = (a: string, b: string) => {
+  if (a === b) {
     return true;
   }
   return false;
