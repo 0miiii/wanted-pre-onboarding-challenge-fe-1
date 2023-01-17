@@ -1,14 +1,14 @@
 import React, { useState } from "react";
+import { AxiosResponse } from "axios";
 import Button from "../../atoms/Button/Button";
 import { Todo } from "../../../types/todo";
-import { createTodo_request } from "../../../apis/todo";
+import todoApi from "../../../apis/todo";
 
 const TodoForm: React.FC<{
   addTodoList: React.Dispatch<React.SetStateAction<Todo[]>>;
 }> = ({ addTodoList }) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredContent, setEnteredContent] = useState("");
-  const token = localStorage.getItem("token");
 
   const titleChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredTitle(event.target.value);
@@ -20,7 +20,7 @@ const TodoForm: React.FC<{
     setEnteredContent(event.target.value);
   };
 
-  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (enteredTitle === "" && enteredContent === "") {
@@ -29,10 +29,16 @@ const TodoForm: React.FC<{
     }
 
     const todo = { title: enteredTitle, content: enteredContent };
-    const response = await createTodo_request(todo, token);
-    addTodoList((prev) => {
-      return [...prev, response.data];
-    });
+    todoApi
+      .createTodo(todo)
+      .then((response: AxiosResponse<{ data: Todo }>) => {
+        addTodoList((prev) => {
+          return [...prev, response.data.data];
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     setEnteredTitle("");
     setEnteredContent("");
