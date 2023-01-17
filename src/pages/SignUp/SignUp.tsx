@@ -28,7 +28,8 @@ const SignUp: React.FC<{
 
   const enteredEmailIsValid = isEmail(enteredEmail);
   const enteredPwIsValid = isMoreThan8Length(enteredPw);
-  const enteredPwCheckIsValid = doMatch(enteredPw, enteredPwCheck);
+  const enteredPwCheckIsValid =
+    doMatch(enteredPw, enteredPwCheck) && enteredPwIsValid;
   const isFormValid =
     enteredEmailIsValid && enteredPwIsValid && enteredPwCheckIsValid;
 
