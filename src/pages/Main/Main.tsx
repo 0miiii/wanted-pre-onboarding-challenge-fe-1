@@ -1,31 +1,43 @@
 import React, { useState, useEffect } from "react";
-import { getTodos_request } from "../../apis/todo";
+import { AxiosResponse } from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import todoApi from "../../apis/todo";
 import { Todo } from "../../types/todo";
 import TodoForm from "../../components/templates/TodoForm/TodoForm";
 import TodoList from "../../components/templates/TodoList/TodoList";
 
+type GetTodos = { data: Todo[] };
+
 const Main = () => {
-  const token = localStorage.getItem("token");
+  const isLogin = useSelector((state: RootState) => state.auth.isLoggedIn);
   const [todoList, setTodoList] = useState<Todo[]>([]);
 
+  const getTodos = () => {
+    todoApi
+      .getTodos()
+      .then((response: AxiosResponse<GetTodos>) => {
+        setTodoList(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
-    getTodos_request(token).then((res) => {
-      const { data } = res;
-      setTodoList(data);
-    });
-  }, [token]);
+    getTodos();
+  }, []);
 
   return (
-    <>
-      {token ? (
+    <main>
+      {isLogin && (
         <>
           <TodoList todoList={todoList} />
           <TodoForm addTodoList={setTodoList} />
         </>
-      ) : (
-        <div>잘못된 접근입니다.</div>
       )}
-    </>
+      {!isLogin && <div>잘못된 접근입니다.</div>}
+    </main>
   );
 };
 
