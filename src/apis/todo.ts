@@ -1,74 +1,22 @@
-import axios from "axios";
+import instance from "./instance";
 import { RequestTodo } from "../types/todo";
 
-export const createTodo_request = async (
-  todo: RequestTodo,
-  token: string | null
-) => {
-  try {
-    const { data } = await axios.post(`http://localhost:8080/todos`, todo, {
-      headers: { Authorization: token },
-    });
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+const todoApi = {
+  getTodos: () => {
+    return instance.get("/todos");
+  },
+  getTodosById: (id: string) => {
+    return instance.get(`/todos/${id}`);
+  },
+  createTodo: (todo: RequestTodo) => {
+    return instance.post("/todos", todo);
+  },
+  updateTodo: (id: string, todo: RequestTodo) => {
+    return instance.put(`todos/${id}`, todo);
+  },
+  deleteTodo: (id: string) => {
+    return instance.delete(`/todos/${id}`);
+  },
 };
 
-export const getTodos_request = async (token: string | null) => {
-  try {
-    const { data } = await axios.get(`http://localhost:8080/todos`, {
-      headers: { Authorization: token },
-    });
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const getTodosById_request = async (
-  id: string | undefined,
-  token: string | null
-) => {
-  try {
-    const { data } = await axios.get(`http://localhost:8080/todos/${id}`, {
-      headers: { Authorization: token },
-    });
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const deleteTodoRequest = async (
-  id: string | undefined,
-  token: string | null
-) => {
-  try {
-    const { data } = await axios.delete(`http://localhost:8080/todos/${id}`, {
-      headers: { Authorization: token },
-    });
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const updateTodoRequest = async (
-  todo: RequestTodo,
-  token: string | null,
-  id: string
-) => {
-  try {
-    const { data } = await axios.put(
-      `http://localhost:8080/todos/${id}`,
-      todo,
-      {
-        headers: { Authorization: token },
-      }
-    );
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
+export default todoApi;
