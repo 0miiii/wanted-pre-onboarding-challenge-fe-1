@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../components/atoms/Button/Button";
 import { useLocation, useNavigate } from "react-router";
-import { updateTodoRequest } from "../../apis/todo";
+import Button from "../../components/atoms/Button/Button";
+import todoApi from "../../apis/todo";
 
 const Edit = () => {
   const [enteredTitle, setEnteredTitle] = useState("");
@@ -26,7 +26,7 @@ const Edit = () => {
     setEnteredContent(event.target.value);
   };
 
-  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (enteredTitle === "" && enteredContent === "") {
@@ -35,9 +35,14 @@ const Edit = () => {
     }
 
     const todo = { title: enteredTitle, content: enteredContent };
-    updateTodoRequest(todo, token, todoToEdit.id).then((res) => {
-      navigate(`/detail/${todoToEdit.id}`);
-    });
+    todoApi
+      .updateTodo(todoToEdit.id, todo)
+      .then((response) => {
+        navigate(`/detail/${todoToEdit.id}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     setEnteredTitle("");
     setEnteredContent("");
