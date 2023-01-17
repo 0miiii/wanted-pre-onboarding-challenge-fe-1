@@ -9,7 +9,7 @@ instance.interceptors.request.use(
     const token = localStorage.getItem("token");
     if (token) {
       config.headers = {};
-      config.headers.Authrization = token;
+      config.headers.Authorization = token;
     }
     return config;
   },
