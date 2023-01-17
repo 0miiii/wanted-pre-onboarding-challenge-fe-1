@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type AuthState = {
-  token: string;
+  token: string | null;
   isLoggedIn: boolean;
 };
 
 const initialState: AuthState = {
-  token: "",
-  isLoggedIn: false,
+  token: localStorage.getItem("token"),
+  isLoggedIn: !!localStorage.getItem("token"),
 };
 
 const authSlice = createSlice({
