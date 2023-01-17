@@ -18,6 +18,7 @@ const App = () => {
         <Route path={PATH.MAIN} element={<Main />} />
         <Route path={PATH.EDIT} element={<Edit />} />
         <Route path={PATH.DETAIL} element={<Detail />} />
+        <Route path="*" element={<div>잘못된 접근입니다.</div>} />
       </Routes>
     </>
   );
