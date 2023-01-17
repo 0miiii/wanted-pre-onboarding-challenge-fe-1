@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { AxiosResponse } from "axios";
+import { loginHandler } from "../../store/reducers/authSlice";
 import { SIGNUP } from "../../constants/auth";
-import { auth_request } from "../../apis/auth";
-import Button from "../../components/atoms/Button/Button";
 import { isEmail, isMoreThan8Length, doMatch } from "../../utils/validCheck";
+import Button from "../../components/atoms/Button/Button";
+import instance from "../../apis/instance";
+
+type LoginResponse = { token: string; message: string };
 
 const InputContainer = styled.div`
   background-color: antiquewhite;
@@ -14,9 +19,7 @@ const InputContainer = styled.div`
   margin: 10px;
 `;
 
-const SignUp: React.FC<{
-  addToken: React.Dispatch<React.SetStateAction<string | null>>;
-}> = ({ addToken }) => {
+const SignUp = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [emailInputTouched, setEmailInputTouched] = useState(false);
 
@@ -34,8 +37,11 @@ const SignUp: React.FC<{
     enteredEmailIsValid && enteredPwIsValid && enteredPwCheckIsValid;
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   let enteredEmailFeedback;
+  let enteredPwFeedback;
+  let enteredPwCheckFeedback;
 
   if (!emailInputTouched) {
     enteredEmailFeedback = "";
@@ -47,8 +53,6 @@ const SignUp: React.FC<{
     enteredEmailFeedback = SIGNUP.EMAIL_VALID_SUCCESS;
   }
 
-  let enteredPwFeedback;
-
   if (!pwInputTouched) {
     enteredPwFeedback = "";
   }
@@ -58,8 +62,6 @@ const SignUp: React.FC<{
   if (pwInputTouched && enteredPwIsValid) {
     enteredPwFeedback = SIGNUP.PW_VALID_SUCCESS;
   }
-
-  let enteredPwCheckFeedback;
 
   if (!checkPwInputTouched) {
     enteredPwCheckFeedback = "";
@@ -95,18 +97,23 @@ const SignUp: React.FC<{
     setCheckInputTouched(true);
   };
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    // event.preventDefault();
-    // if (allValid) {
-    //   const userInfo = { email: enteredEmail, password: enteredPwCheck };
-    //   const response = await auth_request("signup", userInfo);
-    //   alert(response.message);
-    //   localStorage.setItem("token", response.token);
-    //   addToken(response.token);
-    //   navigate("/main");
-    //   return;
-    // }
-    // return alert("아이디와 비밀번호를 다시 확인해주세요");
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!isFormValid) {
+      return alert("입력이 올바르지 않습니다.");
+    }
+
+    try {
+      const userInfo = { email: enteredEmail, password: enteredPwCheck };
+      const response: AxiosResponse<LoginResponse> = await instance.post(
+        "/users/create",
+        userInfo
+      );
+      dispatch(loginHandler(response.data.token));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
