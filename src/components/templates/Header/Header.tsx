@@ -1,25 +1,26 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Button from "../../atoms/Button/Button";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutHandler } from "../../../store/reducers/authSlice";
+import { RootState } from "../../../store/store";
 import { PATH } from "../../../constants/path";
+import Button from "../../atoms/Button/Button";
 import Container from "./Header.styles";
 
-const Header: React.FC<{
-  token: string | null;
-  deleteToken: React.Dispatch<React.SetStateAction<string | null>>;
-}> = ({ token, deleteToken }) => {
+const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
-  const logoutHandler = () => {
-    localStorage.removeItem("token");
-    deleteToken(localStorage.getItem("token"));
+  const logoutBtnHandler = () => {
+    dispatch(logoutHandler());
     alert("로그아웃 성공");
     navigate("/login");
   };
 
   return (
     <Container>
-      {!token ? (
+      {!isLoggedIn && (
         <>
           <Link to={PATH.LOGIN}>
             <Button>Login</Button>
@@ -28,9 +29,8 @@ const Header: React.FC<{
             <Button>SignUp</Button>
           </Link>
         </>
-      ) : (
-        <Button onClick={logoutHandler}>Logout</Button>
       )}
+      {isLoggedIn && <Button onClick={logoutBtnHandler}>Logout</Button>}
     </Container>
   );
 };
