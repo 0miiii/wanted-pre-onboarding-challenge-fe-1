@@ -8,7 +8,7 @@ interface Props {
 
 const Button: React.FC<Props> = ({ children, disabled, onClick }) => {
   return (
-    <button disabled={disabled} onClick={onClick}>
+    <button type="submit" disabled={disabled} onClick={onClick}>
       {children}
     </button>
   );
