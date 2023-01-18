@@ -1,27 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { AxiosResponse } from "axios";
-import todoApi from "../../apis/todo";
-import { Todo } from "../../types/todo";
-import Button from "../../components/atoms/Button/Button";
+import todoApi from "../../../apis/todo";
+import { Todo } from "../../../types/todo";
+import Container from "./TodoDetail.style";
+import Button from "../../atoms/Button/Button";
 
-const Detail = () => {
-  const [todo, setTodo] = useState<Todo>({
-    title: "",
-    content: "",
-    id: "",
-    createdAt: "",
-    updatedAt: "",
-  });
+type Props = {
+  clickedTodo: string;
+  onDeleteTodo: React.Dispatch<React.SetStateAction<Todo[]>>;
+};
+
+const intialTodo = {
+  title: "",
+  content: "",
+  id: "",
+  createdAt: "",
+  updatedAt: "",
+};
+
+const TodoDetail: React.FC<Props> = ({ clickedTodo, onDeleteTodo }) => {
+  const [todo, setTodo] = useState<Todo>(intialTodo);
   const navigate = useNavigate();
   const { id } = useParams();
 
   const deleteHandler = () => {
     todoApi
-      .deleteTodo(id as string)
+      .deleteTodo(clickedTodo)
       .then(() => {
+        onDeleteTodo((prev) => {
+          return prev.filter((preTodo) => preTodo.id !== clickedTodo);
+        });
+        setTodo(intialTodo);
         alert("삭제되었습니다.");
-        navigate("/main");
       })
       .catch((error) => {
         console.log(error);
@@ -34,25 +45,25 @@ const Detail = () => {
 
   useEffect(() => {
     todoApi
-      .getTodosById(id as string)
+      .getTodosById(clickedTodo)
       .then((response: AxiosResponse<{ data: Todo }>) => {
         setTodo(response.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [id]);
+  }, [clickedTodo]);
 
   return (
-    <div>
+    <Container>
       <h1>title</h1>
       <div>{todo?.title}</div>
       <h2>content</h2>
       <div>{todo?.content}</div>
       <Button onClick={editHandler}>수정하기</Button>
       <Button onClick={deleteHandler}>삭제하기</Button>
-    </div>
+    </Container>
   );
 };
 
-export default Detail;
+export default TodoDetail;
