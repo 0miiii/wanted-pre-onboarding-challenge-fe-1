@@ -21,8 +21,6 @@ const intialTodo = {
 
 const TodoDetail: React.FC<Props> = ({ clickedTodo, onDeleteTodo }) => {
   const [todo, setTodo] = useState<Todo>(intialTodo);
-  const navigate = useNavigate();
-  const { id } = useParams();
 
   const deleteHandler = () => {
     todoApi
@@ -39,9 +37,7 @@ const TodoDetail: React.FC<Props> = ({ clickedTodo, onDeleteTodo }) => {
       });
   };
 
-  const editHandler = () => {
-    navigate(`/detail/edit/${id as string}`, { state: todo });
-  };
+  const editHandler = () => {};
 
   useEffect(() => {
     todoApi
@@ -56,10 +52,8 @@ const TodoDetail: React.FC<Props> = ({ clickedTodo, onDeleteTodo }) => {
 
   return (
     <Container>
-      <h1>title</h1>
-      <div>{todo?.title}</div>
-      <h2>content</h2>
-      <div>{todo?.content}</div>
+      <h1>{todo?.title}</h1>
+      <p>{todo?.content}</p>
       <Button onClick={editHandler}>수정하기</Button>
       <Button onClick={deleteHandler}>삭제하기</Button>
     </Container>

@@ -1,7 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Todo } from "../../../types/todo";
-import Container from "./TodoList.style";
+import * as S from "./TodoList.style";
 import TodoForm from "../../molecules/TodoForm/TodoForm";
 
 type Props = {
@@ -16,20 +15,20 @@ const TodoList: React.FC<Props> = ({ todoList, onAddTodo, onClickedTodo }) => {
   };
 
   return (
-    <Container>
+    <S.Container>
       <TodoForm onAddTodo={onAddTodo} />
       <ul>
         {todoList.map((todo) => (
-          <li
+          <S.ListContainer
             key={todo.id}
             onClick={() => clickHandler(todo.id)}
             aria-hidden="true"
           >
             {todo.title}
-          </li>
+          </S.ListContainer>
         ))}
       </ul>
-    </Container>
+    </S.Container>
   );
 };
 

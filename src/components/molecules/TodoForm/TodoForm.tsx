@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AxiosResponse } from "axios";
 import Button from "../../atoms/Button/Button";
 import { Todo } from "../../../types/todo";
+import * as S from "./TodoForm.style";
 import todoApi from "../../../apis/todo";
 
 type Props = {
@@ -47,22 +48,27 @@ const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <label htmlFor="title">title</label>
-      <input
-        id="title"
-        type="text"
-        onChange={titleChangeHandler}
-        value={enteredTitle}
-      />
-      <label htmlFor="content">content</label>
-      <textarea
-        id="content"
-        onChange={contentChangeHandler}
-        value={enteredContent}
-      />
+    <S.Container onSubmit={submitHandler}>
+      <h1>todo 작성하기</h1>
+      <S.InputContainer>
+        <label htmlFor="title">title</label>
+        <input
+          id="title"
+          type="text"
+          onChange={titleChangeHandler}
+          value={enteredTitle}
+        />
+      </S.InputContainer>
+      <S.InputContainer>
+        <label htmlFor="content">content</label>
+        <textarea
+          id="content"
+          onChange={contentChangeHandler}
+          value={enteredContent}
+        />
+      </S.InputContainer>
       <Button>작성완료</Button>
-    </form>
+    </S.Container>
   );
 };
 
