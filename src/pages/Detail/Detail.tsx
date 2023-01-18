@@ -6,7 +6,13 @@ import { Todo } from "../../types/todo";
 import Button from "../../components/atoms/Button/Button";
 
 const Detail = () => {
-  const [todo, setTodo] = useState<Todo>();
+  const [todo, setTodo] = useState<Todo>({
+    title: "",
+    content: "",
+    id: "",
+    createdAt: "",
+    updatedAt: "",
+  });
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -23,7 +29,7 @@ const Detail = () => {
   };
 
   const editHandler = () => {
-    navigate(`/detail/${id as string}/edit`, { state: todo });
+    navigate(`/detail/edit/${id as string}`, { state: todo });
   };
 
   useEffect(() => {
