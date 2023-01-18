@@ -15,7 +15,7 @@ const Header = () => {
   const logoutBtnHandler = () => {
     dispatch(logoutHandler());
     alert("로그아웃 성공");
-    navigate("/login");
+    navigate("/");
   };
 
   return (
