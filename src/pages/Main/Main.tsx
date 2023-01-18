@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { Outlet } from "react-router";
 import { AxiosResponse } from "axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
 import todoApi from "../../apis/todo";
 import { Todo } from "../../types/todo";
-import TodoForm from "../../components/templates/TodoForm/TodoForm";
+import Container from "./Main.style";
+import TodoDetail from "../../components/templates/TodoDetail/TodoDetail";
 import TodoList from "../../components/templates/TodoList/TodoList";
 
 type GetTodos = { data: Todo[] };
 
 const Main = () => {
-  const isLogin = useSelector((state: RootState) => state.auth.isLoggedIn);
   const [todoList, setTodoList] = useState<Todo[]>([]);
+  const [clickedTodo, setClickedTodo] = useState("");
 
-  const getTodos = () => {
+  useEffect(() => {
     todoApi
       .getTodos()
       .then((response: AxiosResponse<GetTodos>) => {
@@ -22,22 +22,17 @@ const Main = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  useEffect(() => {
-    getTodos();
   }, []);
 
   return (
-    <main>
-      {isLogin && (
-        <>
-          <TodoList todoList={todoList} />
-          <TodoForm addTodoList={setTodoList} />
-        </>
-      )}
-      {!isLogin && <div>잘못된 접근입니다.</div>}
-    </main>
+    <Container>
+      <TodoList
+        todoList={todoList}
+        onAddTodo={setTodoList}
+        onClickedTodo={setClickedTodo}
+      />
+      <TodoDetail clickedTodo={clickedTodo} onDeleteTodo={setTodoList} />
+    </Container>
   );
 };
 
