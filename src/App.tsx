@@ -6,7 +6,7 @@ import Edit from "./pages/Edit/Edit";
 import Detail from "./pages/Detail/Detail";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
-import { PATH } from "./constants/path";
+import PATH from "./constants/path";
 
 const App = () => {
   return (
