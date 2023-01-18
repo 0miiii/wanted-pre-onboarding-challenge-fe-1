@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-const Container = styled.header`
+const Container = styled.div`
   border: 1px solid red;
-  padding: 10px;
-  text-align: right;
+  max-width: 1200px;
+  /* min-width: 1024px; */
+  margin: 0 auto;
 `;
 
 export default Container;
