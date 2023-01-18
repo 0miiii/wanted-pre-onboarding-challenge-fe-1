@@ -2,29 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import Button from "../../components/atoms/Button/Button";
 import todoApi from "../../apis/todo";
+import { Todo } from "../../types/todo";
 
 const Edit = () => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredContent, setEnteredContent] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
+  const location: { state: Todo } = useLocation();
   const todoToEdit = location.state;
-  const token = localStorage.getItem("token");
 
   const titleChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredTitle(event.target.value);
   };
-
-  useEffect(() => {
-    setEnteredTitle(todoToEdit.title);
-    setEnteredContent(todoToEdit.content);
-  }, [todoToEdit.content, todoToEdit.title]);
 
   const contentChangeHandler = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setEnteredContent(event.target.value);
   };
+
+  useEffect(() => {
+    setEnteredTitle(todoToEdit.title);
+    setEnteredContent(todoToEdit.content);
+  }, [todoToEdit.content, todoToEdit.title]);
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
