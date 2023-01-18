@@ -4,9 +4,11 @@ import Button from "../../atoms/Button/Button";
 import { Todo } from "../../../types/todo";
 import todoApi from "../../../apis/todo";
 
-const TodoForm: React.FC<{
-  addTodoList: React.Dispatch<React.SetStateAction<Todo[]>>;
-}> = ({ addTodoList }) => {
+type Props = {
+  onAddTodo: React.Dispatch<React.SetStateAction<Todo[]>>;
+};
+
+const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredContent, setEnteredContent] = useState("");
 
@@ -32,7 +34,7 @@ const TodoForm: React.FC<{
     todoApi
       .createTodo(todo)
       .then((response: AxiosResponse<{ data: Todo }>) => {
-        addTodoList((prev) => {
+        onAddTodo((prev) => {
           return [...prev, response.data.data];
         });
       })
