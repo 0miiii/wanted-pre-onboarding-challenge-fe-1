@@ -1,10 +1,9 @@
 const PATH = {
-  AUTH: "/",
+  LOGIN: "/",
+  SIGNUP: "/signup",
   MAIN: "/main",
   DETAIL: "/detail/:id",
   EDIT: "/detail/edit/:id",
-  LOGIN: "/login",
-  SIGNUP: "/signup",
 };
 
 export default PATH;
