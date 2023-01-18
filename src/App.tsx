@@ -14,7 +14,7 @@ const App = () => {
   return (
     <GlobalLayout>
       <Routes>
-        <Route path={PATH.LOGIN} element={<Login />} />
+        <Route path={PATH.LOGIN} element={!isLogin && <Login />} />
         <Route path={PATH.SIGNUP} element={<SignUp />} />
         <Route path={PATH.MAIN} element={isLogin && <Main />} />
         <Route path="*" element={<div>잘못된 접근입니다.</div>} />
