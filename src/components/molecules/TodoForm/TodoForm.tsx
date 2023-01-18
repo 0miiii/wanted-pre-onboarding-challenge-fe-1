@@ -12,6 +12,10 @@ type Props = {
 const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredContent, setEnteredContent] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
+
+  const formTitle = !isEdit ? "todo 작성하기" : "todo 수정하기";
+  const buttonTitle = !isEdit ? "작성하기" : "수정하기";
 
   const titleChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredTitle(event.target.value);
@@ -49,7 +53,7 @@ const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
 
   return (
     <S.Container onSubmit={submitHandler}>
-      <h1>todo 작성하기</h1>
+      <h1>{formTitle}</h1>
       <S.InputContainer>
         <label htmlFor="title">title</label>
         <input
@@ -67,7 +71,8 @@ const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
           value={enteredContent}
         />
       </S.InputContainer>
-      <Button>작성완료</Button>
+      <Button>{buttonTitle}</Button>
+      {isEdit && <Button>수정취소</Button>}
     </S.Container>
   );
 };
