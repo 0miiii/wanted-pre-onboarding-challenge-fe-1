@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { loginHandler } from "../../store/reducers/authSlice";
 import { LOGIN } from "../../constants/auth";
 import authApi from "../../apis/auth";
+import FormContainer from "./Login.style";
 import Button from "../../components/atoms/Button/Button";
 
 type LoginResponse = { token: string; message: string };
@@ -47,7 +48,7 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <FormContainer onSubmit={submitHandler}>
       <InputContainer>
         <label htmlFor="email">email</label>
         <input
@@ -67,7 +68,7 @@ const Login = () => {
         />
       </InputContainer>
       <Button>로그인</Button>
-    </form>
+    </FormContainer>
   );
 };
 

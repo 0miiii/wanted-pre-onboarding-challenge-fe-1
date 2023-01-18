@@ -7,6 +7,7 @@ import authApi from "../../apis/auth";
 import { loginHandler } from "../../store/reducers/authSlice";
 import { SIGNUP } from "../../constants/auth";
 import { isEmail, isMoreThan8Length, doMatch } from "../../utils/validCheck";
+import FormContainer from "./SignUp.style";
 import Button from "../../components/atoms/Button/Button";
 
 type LoginResponse = { token: string; message: string };
@@ -139,7 +140,7 @@ const SignUp = () => {
   // };
 
   return (
-    <form onSubmit={submitHandler}>
+    <FormContainer onSubmit={submitHandler}>
       <InputContainer>
         <label htmlFor="email">email</label>
         <input
@@ -177,7 +178,7 @@ const SignUp = () => {
       </InputContainer>
 
       <Button disabled={!isFormValid}>가입하기</Button>
-    </form>
+    </FormContainer>
   );
 };
 
