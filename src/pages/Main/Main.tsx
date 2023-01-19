@@ -32,7 +32,7 @@ const Main = () => {
         onClickedTodo={setClickedTodo}
         isLoading={isLoading}
       />
-      <TodoDetail clickedTodo={clickedTodo} onDeleteTodo={setTodoList} />
+      <TodoDetail clickedTodo={clickedTodo} onSetTodo={setTodoList} />
     </Container>
   );
 };

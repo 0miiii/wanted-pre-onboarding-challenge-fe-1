@@ -6,7 +6,7 @@ import Button from "../../atoms/Button/Button";
 
 type Props = {
   clickedTodo: string;
-  onDeleteTodo: React.Dispatch<React.SetStateAction<Todo[]>>;
+  onSetTodo: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
 const intialTodo = {
@@ -17,7 +17,7 @@ const intialTodo = {
   updatedAt: "",
 };
 
-const TodoDetail: React.FC<Props> = ({ clickedTodo, onDeleteTodo }) => {
+const TodoDetail: React.FC<Props> = ({ clickedTodo, onSetTodo }) => {
   const [todo, setTodo] = useState<Todo>(intialTodo);
   const [isLoading, setIsLoading] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
@@ -31,7 +31,7 @@ const TodoDetail: React.FC<Props> = ({ clickedTodo, onDeleteTodo }) => {
     todoApi
       .deleteTodo(clickedTodo)
       .then(() => {
-        onDeleteTodo((prev) => {
+        onSetTodo((prev) => {
           return prev.filter((preTodo) => preTodo.id !== clickedTodo);
         });
         setTodo(intialTodo);
@@ -74,7 +74,7 @@ const TodoDetail: React.FC<Props> = ({ clickedTodo, onDeleteTodo }) => {
     todoApi
       .updateTodo(clickedTodo, editedTodo)
       .then((response) => {
-        onDeleteTodo((prev) => {
+        onSetTodo((prev) => {
           return prev.map((preTodo) => {
             if (preTodo.id === clickedTodo) {
               return response.data.data;
