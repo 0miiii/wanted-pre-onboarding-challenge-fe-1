@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logoutHandler } from "../../../store/reducers/authSlice";
+import { tokenDeleteHandler } from "../../../store/reducers/authSlice";
 import { RootState } from "../../../store/store";
 import PATH from "../../../constants/path";
 import Button from "../../atoms/Button/Button";
@@ -13,7 +13,7 @@ const Header = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   const logoutBtnHandler = () => {
-    dispatch(logoutHandler());
+    dispatch(tokenDeleteHandler());
     alert("로그아웃 성공");
     navigate("/");
   };

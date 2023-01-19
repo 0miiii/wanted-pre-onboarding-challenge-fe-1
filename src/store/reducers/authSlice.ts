@@ -14,12 +14,12 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    loginHandler: (state, action: PayloadAction<string>) => {
+    tokenSaveHandler: (state, action: PayloadAction<string>) => {
       localStorage.setItem("token", action.payload);
       state.token = action.payload;
       state.isLoggedIn = true;
     },
-    logoutHandler: (state) => {
+    tokenDeleteHandler: (state) => {
       localStorage.removeItem("token");
       state.token = "";
       state.isLoggedIn = false;
@@ -27,5 +27,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { loginHandler, logoutHandler } = authSlice.actions;
+export const { tokenSaveHandler, tokenDeleteHandler } = authSlice.actions;
 export default authSlice.reducer;
