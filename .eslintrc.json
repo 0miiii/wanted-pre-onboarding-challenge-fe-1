@@ -20,8 +20,12 @@
     "sourceType": "module",
     "project": "tsconfig.json"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
   "rules": {
+    "no-alert": 0,
     "no-param-reassign": 0,
     "react/require-default-props": 0,
     "arrow-body-style": "off",
@@ -34,7 +38,9 @@
     "jsx-a11y/label-has-associated-control": [
       2,
       {
-        "labelAttributes": ["htmlFor"]
+        "labelAttributes": [
+          "htmlFor"
+        ]
       }
     ]
   }
