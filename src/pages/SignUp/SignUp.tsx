@@ -8,8 +8,7 @@ import { SIGNUP } from "../../constants/auth";
 import { isEmail, isMoreThan8Length, doMatch } from "../../utils/validCheck";
 import FormContainer from "./SignUp.style";
 import Button from "../../components/atoms/Button/Button";
-
-type UserInfo = { email: string | undefined; password: string | undefined };
+import { EnteredUserInfo } from "../../types/user";
 
 const InputContainer = styled.div`
   background-color: antiquewhite;
@@ -97,7 +96,7 @@ const SignUp = () => {
     setCheckInputTouched(true);
   };
 
-  const signUpHandler = async (userInfo: UserInfo) => {
+  const signUpHandler = async (userInfo: EnteredUserInfo) => {
     const response = await authApi.signUp(userInfo);
     dispatch(tokenSaveHandler(response.data.token));
     alert(response.data.message);

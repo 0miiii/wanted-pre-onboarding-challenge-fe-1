@@ -7,8 +7,7 @@ import { LOGIN } from "../../constants/auth";
 import authApi from "../../apis/auth";
 import FormContainer from "./Login.style";
 import Button from "../../components/atoms/Button/Button";
-
-type UserInfo = { email: string | undefined; password: string | undefined };
+import { EnteredUserInfo } from "../../types/user";
 
 const InputContainer = styled.div`
   background-color: antiquewhite;
@@ -24,7 +23,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const loginHandler = async (userInfo: UserInfo) => {
+  const loginHandler = async (userInfo: EnteredUserInfo) => {
     const response = await authApi.login(userInfo);
     dispatch(tokenSaveHandler(response.data.token));
     alert(response.data.message);

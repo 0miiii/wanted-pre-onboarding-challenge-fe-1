@@ -1,4 +1,4 @@
-export type UserInfoType = {
-  email: string;
-  password: string;
+export type EnteredUserInfo = {
+  email: string | undefined;
+  password: string | undefined;
 };
