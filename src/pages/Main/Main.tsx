@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router";
-import { AxiosResponse } from "axios";
 import todoApi from "../../apis/todo";
 import { Todo } from "../../types/todo";
 import Container from "./Main.style";
 import TodoDetail from "../../components/templates/TodoDetail/TodoDetail";
 import TodoList from "../../components/templates/TodoList/TodoList";
 
-type GetTodos = { data: Todo[] };
-
 const Main = () => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
   const [clickedTodo, setClickedTodo] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     todoApi
       .getTodos()
-      .then((response: AxiosResponse<GetTodos>) => {
+      .then((response) => {
         setTodoList(response.data.data);
+        setIsLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
+        setIsLoading(false);
       });
   }, []);
 
@@ -30,6 +30,7 @@ const Main = () => {
         todoList={todoList}
         onAddTodo={setTodoList}
         onClickedTodo={setClickedTodo}
+        isLoading={isLoading}
       />
       <TodoDetail clickedTodo={clickedTodo} onDeleteTodo={setTodoList} />
     </Container>
