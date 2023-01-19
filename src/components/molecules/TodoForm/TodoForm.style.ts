@@ -21,6 +21,7 @@ export const InputContainer = styled.div`
   }
 
   & > textarea {
+    resize: none;
     flex-grow: 1;
     height: 70px;
   }
