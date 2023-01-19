@@ -7,9 +7,15 @@ type Props = {
   todoList: Todo[];
   onAddTodo: React.Dispatch<React.SetStateAction<Todo[]>>;
   onClickedTodo: React.Dispatch<React.SetStateAction<string>>;
+  isLoading: boolean;
 };
 
-const TodoList: React.FC<Props> = ({ todoList, onAddTodo, onClickedTodo }) => {
+const TodoList: React.FC<Props> = ({
+  todoList,
+  onAddTodo,
+  onClickedTodo,
+  isLoading,
+}) => {
   const clickHandler = (id: string) => {
     onClickedTodo(id);
   };
@@ -17,17 +23,21 @@ const TodoList: React.FC<Props> = ({ todoList, onAddTodo, onClickedTodo }) => {
   return (
     <S.Container>
       <TodoForm onAddTodo={onAddTodo} />
-      <ul>
-        {todoList.map((todo) => (
-          <S.ListContainer
-            key={todo.id}
-            onClick={() => clickHandler(todo.id)}
-            aria-hidden="true"
-          >
-            {todo.title}
-          </S.ListContainer>
-        ))}
-      </ul>
+      {!isLoading && todoList.length > 0 && (
+        <ul>
+          {todoList.map((todo) => (
+            <S.ListContainer
+              key={todo.id}
+              onClick={() => clickHandler(todo.id)}
+              aria-hidden="true"
+            >
+              {todo.title}
+            </S.ListContainer>
+          ))}
+        </ul>
+      )}
+      {!isLoading && todoList.length === 0 && <div>등록된 글이 없습니다</div>}
+      {isLoading && <div>로딩중입니다</div>}
     </S.Container>
   );
 };
