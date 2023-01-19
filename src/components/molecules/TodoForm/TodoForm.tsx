@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { AxiosResponse } from "axios";
 import Button from "../../atoms/Button/Button";
-import { Todo } from "../../../types/todo";
+import { Todo, RequestTodo } from "../../../types/todo";
 import * as S from "./TodoForm.style";
 import todoApi from "../../../apis/todo";
 
@@ -12,10 +11,7 @@ type Props = {
 const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredContent, setEnteredContent] = useState("");
-  const [isEdit, setIsEdit] = useState(false);
-
-  const formTitle = !isEdit ? "todo 작성하기" : "todo 수정하기";
-  const buttonTitle = !isEdit ? "작성하기" : "수정하기";
+  const [isLoading, setIsLoading] = useState(false);
 
   const titleChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEnteredTitle(event.target.value);
@@ -27,33 +23,40 @@ const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
     setEnteredContent(event.target.value);
   };
 
+  const createTodoHandler = async (todo: RequestTodo) => {
+    setIsLoading(true);
+    const { data } = await todoApi.createTodo(todo);
+    onAddTodo((prev) => {
+      return [...prev, data.data];
+    });
+    setIsLoading(false);
+  };
+
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     if (enteredTitle === "" && enteredContent === "") {
       alert("글을 모두 입력해주세요");
       return;
     }
-
+    if (!window.confirm("등록하시겠습니까?")) {
+      return;
+    }
     const todo = { title: enteredTitle, content: enteredContent };
-    todoApi
-      .createTodo(todo)
-      .then((response: AxiosResponse<{ data: Todo }>) => {
-        onAddTodo((prev) => {
-          return [...prev, response.data.data];
-        });
+    createTodoHandler(todo)
+      .then(() => {
+        setEnteredTitle("");
+        setEnteredContent("");
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        alert(err);
+        setIsLoading(false);
       });
-
-    setEnteredTitle("");
-    setEnteredContent("");
   };
 
   return (
     <S.Container onSubmit={submitHandler}>
-      <h1>{formTitle}</h1>
+      <h1>Todo 작성하기</h1>
+
       <S.InputContainer>
         <label htmlFor="title">title</label>
         <input
@@ -63,6 +66,7 @@ const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
           value={enteredTitle}
         />
       </S.InputContainer>
+
       <S.InputContainer>
         <label htmlFor="content">content</label>
         <textarea
@@ -71,8 +75,8 @@ const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
           value={enteredContent}
         />
       </S.InputContainer>
-      <Button>{buttonTitle}</Button>
-      {isEdit && <Button>수정취소</Button>}
+
+      <Button disabled={isLoading}>작성하기</Button>
     </S.Container>
   );
 };
