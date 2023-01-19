@@ -1,15 +1,14 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
-import { AxiosResponse } from "axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { loginHandler } from "../../store/reducers/authSlice";
+import { tokenSaveHandler } from "../../store/reducers/authSlice";
 import { LOGIN } from "../../constants/auth";
 import authApi from "../../apis/auth";
 import FormContainer from "./Login.style";
 import Button from "../../components/atoms/Button/Button";
 
-type LoginResponse = { token: string; message: string };
+type UserInfo = { email: string | undefined; password: string | undefined };
 
 const InputContainer = styled.div`
   background-color: antiquewhite;
@@ -25,26 +24,25 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const loginHandler = async (userInfo: UserInfo) => {
+    const response = await authApi.login(userInfo);
+    dispatch(tokenSaveHandler(response.data.token));
+    alert(response.data.message);
+    navigate("/main");
+  };
+
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const email = enteredEmail.current?.value;
     const password = enteredPassword.current?.value;
+    const userInfo = { email, password };
 
     if (email === "" && password === "") {
       alert("이메일과 비밀번호를 입력해주세요");
       return;
     }
 
-    const userInfo = { email, password };
-    authApi
-      .login(userInfo)
-      .then((response: AxiosResponse<LoginResponse>) => {
-        dispatch(loginHandler(response.data.token));
-        navigate("/main");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    loginHandler(userInfo).catch((err) => alert(err));
   };
 
   return (

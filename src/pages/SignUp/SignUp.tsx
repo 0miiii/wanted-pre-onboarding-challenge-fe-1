@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { AxiosResponse } from "axios";
 import authApi from "../../apis/auth";
-import { loginHandler } from "../../store/reducers/authSlice";
+import { tokenSaveHandler } from "../../store/reducers/authSlice";
 import { SIGNUP } from "../../constants/auth";
 import { isEmail, isMoreThan8Length, doMatch } from "../../utils/validCheck";
 import FormContainer from "./SignUp.style";
 import Button from "../../components/atoms/Button/Button";
 
-type LoginResponse = { token: string; message: string };
+type UserInfo = { email: string | undefined; password: string | undefined };
 
 const InputContainer = styled.div`
   background-color: antiquewhite;
@@ -98,46 +97,22 @@ const SignUp = () => {
     setCheckInputTouched(true);
   };
 
+  const signUpHandler = async (userInfo: UserInfo) => {
+    const response = await authApi.signUp(userInfo);
+    dispatch(tokenSaveHandler(response.data.token));
+    alert(response.data.message);
+    navigate("/main");
+  };
+
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     if (!isFormValid) {
       alert("입력이 올바르지 않습니다.");
       return;
     }
-
     const userInfo = { email: enteredEmail, password: enteredPwCheck };
-    authApi
-      .signUp(userInfo)
-      .then((response: AxiosResponse<LoginResponse>) => {
-        dispatch(loginHandler(response.data.token));
-        navigate("/main");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    signUpHandler(userInfo).catch((err) => alert(err));
   };
-
-  // 코드 잘못된 이유를 찾아야함
-  // const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-
-  //   if (!isFormValid) {
-  //     return alert("입력이 올바르지 않습니다.");
-  //   }
-
-  //   try {
-  //     const userInfo = { email: enteredEmail, password: enteredPwCheck };
-  //     const response: AxiosResponse<LoginResponse> = await instance.post(
-  //       "/users/create",
-  //       userInfo
-  //     );
-  //     dispatch(loginHandler(response.data.token));
-  //     navigate("/main");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <FormContainer onSubmit={submitHandler}>
