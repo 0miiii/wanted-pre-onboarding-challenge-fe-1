@@ -1,22 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 import authApi from "../../apis/auth";
 import { tokenSaveHandler } from "../../store/reducers/authSlice";
 import { SIGNUP } from "../../constants/auth";
 import { isEmail, isMoreThan8Length, doMatch } from "../../utils/validCheck";
-import FormContainer from "./SignUp.style";
+import { FormContainer, InputContainer } from "./SignUp.style";
 import Button from "../../components/atoms/Button/Button";
 import { EnteredUserInfo } from "../../types/user";
-
-const InputContainer = styled.div`
-  background-color: antiquewhite;
-  border-radius: 5px;
-  width: 70%;
-  padding: 10px;
-  margin: 10px;
-`;
 
 const SignUp = () => {
   const [enteredEmail, setEnteredEmail] = useState("");

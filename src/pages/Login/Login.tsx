@@ -1,21 +1,12 @@
 import React, { useRef } from "react";
-import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { tokenSaveHandler } from "../../store/reducers/authSlice";
 import { LOGIN } from "../../constants/auth";
 import authApi from "../../apis/auth";
-import FormContainer from "./Login.style";
+import { FormContainer, InputContainer } from "./Login.style";
 import Button from "../../components/atoms/Button/Button";
 import { EnteredUserInfo } from "../../types/user";
-
-const InputContainer = styled.div`
-  background-color: antiquewhite;
-  border-radius: 5px;
-  width: 70%;
-  padding: 10px;
-  margin: 10px;
-`;
 
 const Login = () => {
   const enteredEmail = useRef<HTMLInputElement>(null);
