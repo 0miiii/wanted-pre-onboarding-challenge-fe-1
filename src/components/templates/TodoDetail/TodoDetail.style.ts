@@ -1,39 +1,48 @@
 import styled from "styled-components";
 
-const Container = styled.div`
-  border: 1px solid green;
-  width: 50%;
+export const Container = styled.div`
+  width: 60%;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 
   & > h1 {
     padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid red;
     border-radius: 5px;
+    border: 1px solid antiquewhite;
   }
 
   & > p {
     padding: 10px;
     height: 200px;
-    border: 1px solid red;
     border-radius: 5px;
+    border: 1px solid antiquewhite;
   }
 
-  & > form > input {
+  & > form > input,
+  textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    border-width: 1px;
+    border: 1px solid antiquewhite;
     border-radius: 5px;
   }
 
   & > form > textarea {
     resize: none;
-    width: 100%;
     height: 200px;
-    padding: 10px;
-    border-radius: 5px;
+  }
+
+  & > form > input:focus,
+  textarea:focus {
+    outline: none;
+    border: 1px solid palevioletred;
   }
 `;
 
-export default Container;
+export const BtnContainer = styled.div`
+  display: flex;
+  justify-content: right;
+  gap: 5px;
+`;

@@ -54,7 +54,7 @@ const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
   };
 
   return (
-    <S.Container onSubmit={submitHandler}>
+    <S.FormContainer onSubmit={submitHandler}>
       <h1>Todo 작성하기</h1>
 
       <S.InputContainer>
@@ -76,8 +76,10 @@ const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
         />
       </S.InputContainer>
 
-      <Button disabled={isLoading}>작성하기</Button>
-    </S.Container>
+      <S.BtnContainer>
+        <Button disabled={isLoading}>작성하기</Button>
+      </S.BtnContainer>
+    </S.FormContainer>
   );
 };
 

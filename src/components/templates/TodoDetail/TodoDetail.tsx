@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import todoApi from "../../../apis/todo";
 import { TodoInfo } from "../../../types/todo";
-import Container from "./TodoDetail.style";
+import * as S from "./TodoDetail.style";
 import Button from "../../atoms/Button/Button";
 
 type Props = {
@@ -106,13 +106,15 @@ const TodoDetail: React.FC<Props> = ({ clickedTodo, onSetTodo }) => {
   }, [clickedTodo]);
 
   return (
-    <Container>
+    <S.Container>
       {!isLoading && !isEdit && (
         <>
           <h1>{todo.title}</h1>
           <p>{todo.content}</p>
-          <Button onClick={editHandler}>수정하기</Button>
-          <Button onClick={deleteHandler}>삭제하기</Button>
+          <S.BtnContainer>
+            <Button onClick={editHandler}>수정하기</Button>
+            <Button onClick={deleteHandler}>삭제하기</Button>
+          </S.BtnContainer>
         </>
       )}
       {isLoading && <div>로딩중입니다.</div>}
@@ -124,13 +126,15 @@ const TodoDetail: React.FC<Props> = ({ clickedTodo, onSetTodo }) => {
             onChange={titleChangeHandler}
           />
           <textarea value={editedContent} onChange={contentChangeHandler} />
-          <Button type="button" onClick={editCancelHandler}>
-            취소하기
-          </Button>
-          <Button type="submit">수정하기</Button>
+          <S.BtnContainer>
+            <Button type="button" onClick={editCancelHandler}>
+              취소하기
+            </Button>
+            <Button type="submit">수정하기</Button>
+          </S.BtnContainer>
         </form>
       )}
-    </Container>
+    </S.Container>
   );
 };
 

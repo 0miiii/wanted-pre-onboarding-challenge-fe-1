@@ -1,28 +1,43 @@
 import styled from "styled-components";
 
-export const Container = styled.form`
-  border: 1px solid green;
+export const FormContainer = styled.form`
+  padding: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  > h1 {
+    text-align: center;
+  }
+`;
+
+export const BtnContainer = styled.div`
+  text-align: right;
 `;
 
 export const InputContainer = styled.div`
-  background-color: antiquewhite;
   border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 
-  & > label {
-    width: 60px;
+  > input,
+  textarea {
+    padding: 5px;
+    border: 1px solid antiquewhite;
+    border-radius: 5px;
+    margin: 5px 0;
   }
 
-  & > input {
-    flex-grow: 1;
-  }
-
-  & > textarea {
+  > textarea {
     resize: none;
-    flex-grow: 1;
     height: 70px;
+  }
+
+  > input:focus,
+  textarea:focus {
+    outline: none;
+    border: 1px solid palevioletred;
   }
 `;
