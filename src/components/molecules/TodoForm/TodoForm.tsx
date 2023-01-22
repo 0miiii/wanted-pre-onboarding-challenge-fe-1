@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "../../atoms/Button/Button";
 import { TodoInfo, RequestTodo } from "../../../types/todo";
 import * as S from "./TodoForm.style";
+import TODO from "../../../constants/todo";
 import todoApi from "../../../apis/todo";
 
 type Props = {
@@ -35,10 +36,10 @@ const TodoForm: React.FC<Props> = ({ onAddTodo }) => {
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (enteredTitle === "" && enteredContent === "") {
-      alert("글을 모두 입력해주세요");
+      alert(TODO.ENTER_ALL_TEXT);
       return;
     }
-    if (!window.confirm("등록하시겠습니까?")) {
+    if (!window.confirm(TODO.DO_YOU_REGISTER)) {
       return;
     }
     const todo = { title: enteredTitle, content: enteredContent };

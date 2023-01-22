@@ -3,6 +3,7 @@ import todoApi from "../../../apis/todo";
 import { TodoInfo } from "../../../types/todo";
 import * as S from "./TodoDetail.style";
 import Button from "../../atoms/Button/Button";
+import TODO from "../../../constants/todo";
 
 type Props = {
   clickedTodo: string;
@@ -25,7 +26,7 @@ const TodoDetail: React.FC<Props> = ({ clickedTodo, onSetTodo }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const deleteHandler = () => {
-    if (!window.confirm("정말 삭제하시겠습니까?")) {
+    if (!window.confirm(TODO.DO_YOU_DELELTE)) {
       return;
     }
     todoApi
@@ -35,7 +36,7 @@ const TodoDetail: React.FC<Props> = ({ clickedTodo, onSetTodo }) => {
           return prev.filter((preTodo) => preTodo.id !== clickedTodo);
         });
         setTodo(intialTodo);
-        alert("삭제되었습니다.");
+        alert(TODO.DELETE_SUCCESS);
       })
       .catch((error) => {
         alert(error);
@@ -47,7 +48,7 @@ const TodoDetail: React.FC<Props> = ({ clickedTodo, onSetTodo }) => {
   };
 
   const editCancelHandler = () => {
-    if (!window.confirm("수정 취소하시겠습니까?")) {
+    if (!window.confirm(TODO.DO_YOU_CANCEL_EDIT)) {
       return;
     }
     setEditedTitle(todo.title);
@@ -67,7 +68,7 @@ const TodoDetail: React.FC<Props> = ({ clickedTodo, onSetTodo }) => {
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!window.confirm("수정하시겠습니까?")) {
+    if (!window.confirm(TODO.DO_YOU_EDIT)) {
       return;
     }
     const editedTodo = { title: editedTitle, content: editedContent };
