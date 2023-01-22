@@ -3,7 +3,7 @@ import todoApi from "../../apis/todo";
 import { TodoInfo } from "../../types/todo";
 import Container from "./Todo.style";
 import TodoDetail from "../../components/templates/TodoDetail/TodoDetail";
-import TodoList from "../../components/templates/TodoList/TodoList";
+import TodoMain from "../../components/templates/TodoMain/TodoMain";
 
 const Todo = () => {
   const [todoList, setTodoList] = useState<TodoInfo[]>([]);
@@ -26,7 +26,7 @@ const Todo = () => {
 
   return (
     <Container>
-      <TodoList
+      <TodoMain
         todoList={todoList}
         onAddTodo={setTodoList}
         onClickedTodo={setClickedTodo}

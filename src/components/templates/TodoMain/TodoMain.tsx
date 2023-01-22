@@ -1,6 +1,6 @@
 import React from "react";
 import { TodoInfo } from "../../../types/todo";
-import * as S from "./TodoList.style";
+import * as S from "./TodoMain.style";
 import TodoForm from "../../molecules/TodoForm/TodoForm";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
   isLoading: boolean;
 };
 
-const TodoList: React.FC<Props> = ({
+const TodoMain: React.FC<Props> = ({
   todoList,
   onAddTodo,
   onClickedTodo,
@@ -42,4 +42,4 @@ const TodoList: React.FC<Props> = ({
   );
 };
 
-export default TodoList;
+export default TodoMain;
