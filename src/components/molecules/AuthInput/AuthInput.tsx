@@ -1,14 +1,27 @@
 import React, { forwardRef } from "react";
 import styled from "styled-components";
 
-export const InputContainer = styled.div`
-  background-color: antiquewhite;
+const InputContainer = styled.div`
   border-radius: 5px;
-  width: 70%;
-  padding: 10px;
-  margin: 10px;
   display: flex;
   flex-direction: column;
+
+  > input {
+    padding: 5px;
+    border: 1px solid antiquewhite;
+    border-radius: 5px;
+    margin: 5px 0;
+  }
+
+  > input:focus {
+    outline: none;
+    border: 1px solid palevioletred;
+  }
+
+  > p {
+    color: red;
+    font-size: 12px;
+  }
 `;
 
 type Ref = HTMLInputElement;

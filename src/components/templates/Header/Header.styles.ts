@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
 const Container = styled.header`
-  border: 1px solid red;
+  border-bottom: 1px solid antiquewhite;
   padding: 10px;
-  text-align: right;
+  display: flex;
+  justify-content: right;
+  gap: 5px;
 `;
 
 export default Container;

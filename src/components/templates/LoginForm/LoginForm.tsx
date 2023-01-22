@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import styled from "styled-components";
 import { tokenSaveHandler } from "../../../store/reducers/authSlice";
 import { LOGIN } from "../../../constants/auth";
 import PATH from "../../../constants/path";
@@ -9,12 +8,7 @@ import authApi from "../../../apis/auth";
 import Button from "../../atoms/Button/Button";
 import { EnteredUserInfo } from "../../../types/user";
 import AuthInput from "../../molecules/AuthInput/AuthInput";
-
-export const FormContainer = styled.form`
-  border: 1px solid green;
-  width: 70%;
-  margin: auto;
-`;
+import * as S from "./LoginForm.style";
 
 const LoginForm = () => {
   const enteredEmail = useRef<HTMLInputElement>(null);
@@ -44,7 +38,8 @@ const LoginForm = () => {
   };
 
   return (
-    <FormContainer onSubmit={submitHandler}>
+    <S.FormContainer onSubmit={submitHandler}>
+      <h1>로그인</h1>
       <AuthInput
         placeholder={LOGIN.ENTER_YOUR_EMAIL}
         label="email"
@@ -59,8 +54,10 @@ const LoginForm = () => {
         id="password"
         ref={enteredPassword}
       />
-      <Button>로그인</Button>
-    </FormContainer>
+      <S.BtnContainer>
+        <Button>로그인</Button>
+      </S.BtnContainer>
+    </S.FormContainer>
   );
 };
 

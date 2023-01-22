@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 import authApi from "../../../apis/auth";
 import { tokenSaveHandler } from "../../../store/reducers/authSlice";
 import { SIGNUP } from "../../../constants/auth";
@@ -10,12 +9,7 @@ import Button from "../../atoms/Button/Button";
 import AuthInput from "../../molecules/AuthInput/AuthInput";
 import { EnteredUserInfo } from "../../../types/user";
 import PATH from "../../../constants/path";
-
-export const FormContainer = styled.form`
-  width: 50%;
-  margin: auto;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-`;
+import * as S from "./SignUpForm.style";
 
 const SignUpForm = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -88,7 +82,8 @@ const SignUpForm = () => {
     signUpHandler(userInfo).catch((err) => alert(err));
   };
   return (
-    <FormContainer onSubmit={submitHandler}>
+    <S.FormContainer onSubmit={submitHandler}>
+      <h1>회원가입</h1>
       <AuthInput
         label="email"
         id="email"
@@ -116,8 +111,10 @@ const SignUpForm = () => {
         inputFeedBack={enteredPwCheckFeedback}
         placeholder={SIGNUP.ENTER_YOUR_PASSWORD}
       />
-      <Button disabled={!isFormValid}>가입하기</Button>
-    </FormContainer>
+      <S.BtnContainer>
+        <Button disabled={!isFormValid}>가입하기</Button>
+      </S.BtnContainer>
+    </S.FormContainer>
   );
 };
 
