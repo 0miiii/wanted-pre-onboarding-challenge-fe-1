@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { tokenDeleteHandler } from "../../../store/reducers/authSlice";
 import { RootState } from "../../../store/store";
 import PATH from "../../../constants/path";
+import { LOGIN } from "../../../constants/auth";
 import Button from "../../atoms/Button/Button";
 import Container from "./Header.styles";
 
@@ -14,8 +15,8 @@ const Header = () => {
 
   const logoutBtnHandler = () => {
     dispatch(tokenDeleteHandler());
-    alert("로그아웃 성공");
-    navigate("/");
+    alert(LOGIN.SUCCESS_LOGOUT);
+    navigate(PATH.LOGIN);
   };
 
   return (
