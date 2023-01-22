@@ -5,6 +5,7 @@ export const FormContainer = styled.form`
   padding: 10px;
   margin: 10px auto;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   gap: 10px;
