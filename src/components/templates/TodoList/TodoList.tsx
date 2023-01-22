@@ -1,11 +1,11 @@
 import React from "react";
-import { Todo } from "../../../types/todo";
+import { TodoInfo } from "../../../types/todo";
 import * as S from "./TodoList.style";
 import TodoForm from "../../molecules/TodoForm/TodoForm";
 
 type Props = {
-  todoList: Todo[];
-  onAddTodo: React.Dispatch<React.SetStateAction<Todo[]>>;
+  todoList: TodoInfo[];
+  onAddTodo: React.Dispatch<React.SetStateAction<TodoInfo[]>>;
   onClickedTodo: React.Dispatch<React.SetStateAction<string>>;
   isLoading: boolean;
 };

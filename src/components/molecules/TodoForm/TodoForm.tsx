@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Button from "../../atoms/Button/Button";
-import { Todo, RequestTodo } from "../../../types/todo";
+import { TodoInfo, RequestTodo } from "../../../types/todo";
 import * as S from "./TodoForm.style";
 import todoApi from "../../../apis/todo";
 
 type Props = {
-  onAddTodo: React.Dispatch<React.SetStateAction<Todo[]>>;
+  onAddTodo: React.Dispatch<React.SetStateAction<TodoInfo[]>>;
 };
 
 const TodoForm: React.FC<Props> = ({ onAddTodo }) => {

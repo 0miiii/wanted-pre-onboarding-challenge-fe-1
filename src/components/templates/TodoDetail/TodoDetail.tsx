@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import todoApi from "../../../apis/todo";
-import { Todo } from "../../../types/todo";
+import { TodoInfo } from "../../../types/todo";
 import Container from "./TodoDetail.style";
 import Button from "../../atoms/Button/Button";
 
 type Props = {
   clickedTodo: string;
-  onSetTodo: React.Dispatch<React.SetStateAction<Todo[]>>;
+  onSetTodo: React.Dispatch<React.SetStateAction<TodoInfo[]>>;
 };
 
 const intialTodo = {
@@ -18,7 +18,7 @@ const intialTodo = {
 };
 
 const TodoDetail: React.FC<Props> = ({ clickedTodo, onSetTodo }) => {
-  const [todo, setTodo] = useState<Todo>(intialTodo);
+  const [todo, setTodo] = useState<TodoInfo>(intialTodo);
   const [isLoading, setIsLoading] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
   const [editedContent, setEditContent] = useState("");

@@ -1,18 +1,18 @@
 import instance from "./instance";
-import { RequestTodo, Todo } from "../types/todo";
+import { RequestTodo, TodoInfo } from "../types/todo";
 
 const todoApi = {
   getTodos: () => {
-    return instance.get<{ data: Todo[] }>("/todos");
+    return instance.get<{ data: TodoInfo[] }>("/todos");
   },
   getTodosById: (id: string) => {
-    return instance.get<{ data: Todo }>(`/todos/${id}`);
+    return instance.get<{ data: TodoInfo }>(`/todos/${id}`);
   },
   createTodo: (todo: RequestTodo) => {
-    return instance.post<{ data: Todo }>("/todos", todo);
+    return instance.post<{ data: TodoInfo }>("/todos", todo);
   },
   updateTodo: (id: string, todo: RequestTodo) => {
-    return instance.put<{ data: Todo }>(`todos/${id}`, todo);
+    return instance.put<{ data: TodoInfo }>(`todos/${id}`, todo);
   },
   deleteTodo: (id: string) => {
     return instance.delete<null>(`/todos/${id}`);

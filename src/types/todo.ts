@@ -3,7 +3,7 @@ export type RequestTodo = {
   content: string;
 };
 
-export type Todo = {
+export type TodoInfo = {
   title: string;
   content: string;
   id: string;

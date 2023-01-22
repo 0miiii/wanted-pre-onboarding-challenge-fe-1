@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import todoApi from "../../apis/todo";
-import { Todo } from "../../types/todo";
-import Container from "./Main.style";
+import { TodoInfo } from "../../types/todo";
+import Container from "./Todo.style";
 import TodoDetail from "../../components/templates/TodoDetail/TodoDetail";
 import TodoList from "../../components/templates/TodoList/TodoList";
 
-const Main = () => {
-  const [todoList, setTodoList] = useState<Todo[]>([]);
+const Todo = () => {
+  const [todoList, setTodoList] = useState<TodoInfo[]>([]);
   const [clickedTodo, setClickedTodo] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,4 +37,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Todo;

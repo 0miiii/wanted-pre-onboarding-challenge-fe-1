@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
-import Main from "./pages/Main/Main";
+import Todo from "./pages/Todo/Todo";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import Error from "./pages/Error/Error";
@@ -16,7 +16,7 @@ const App = () => {
       <Routes>
         <Route path={PATH.LOGIN} element={!isLogin ? <Login /> : <Error />} />
         <Route path={PATH.SIGNUP} element={<SignUp />} />
-        <Route path={PATH.MAIN} element={isLogin ? <Main /> : <Error />} />
+        <Route path={PATH.MAIN} element={isLogin ? <Todo /> : <Error />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </GlobalLayout>
