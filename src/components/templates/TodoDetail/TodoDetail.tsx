@@ -11,8 +11,8 @@ type Props = {
 };
 
 const intialTodo = {
-  title: "",
-  content: "",
+  title: "제목",
+  content: "내용",
   id: "",
   createdAt: "",
   updatedAt: "",
